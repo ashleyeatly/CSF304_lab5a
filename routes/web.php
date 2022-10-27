@@ -29,9 +29,6 @@ Route::get('/', function () {
     // return view('welcome');
 });
 
-Route::get('/test', function () {
-    return view('test',['name'=>'Virat Gandhi']);
-//    return view(view: 'test');
-});
+Route::get('/people', [\App\Http\Controllers\PersonController::class,'index'])->name('people.index');
+Route::get('/people/{id}',[\App\Http\Controllers\PersonController::class,'show'])->name('people.show');
 
-Route::get('/people', [\App\Http\Controllers\PersonController::class,'index']);
