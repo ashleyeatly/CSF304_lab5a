@@ -7,6 +7,7 @@
     <div class="panel panel-default">
         <!-- Content here -->
         <div class="panel-heading">Panel Heading</div>
+        <a href="{{route('people.create')}}">Create Person</a>
         <div class="panel-body">
             <ul>
                 <li>Title: {{$person->title}}</li>

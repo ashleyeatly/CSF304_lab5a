@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Person;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 
 class PersonController extends Controller
@@ -10,9 +11,9 @@ class PersonController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|Application
     {
         $people = Person::all();
         return view('people.index',['people'=>$people]);
@@ -22,11 +23,11 @@ class PersonController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
-        //
+        return view('people.create');
     }
 
     /**
@@ -37,7 +38,25 @@ class PersonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        dd($request['name'])
+//        dd($request['first_name']);
+        $validatedData = $request->validate([
+            'title' => 'required|max:25',
+            'first_name' => 'required|string',
+                'surname' => 'required|string',
+                'address' => 'required|string',
+            ]);
+        $a = new Person;
+        $a->title = $validatedData['title'];
+        $a->first_name = $validatedData['first_name'];
+        $a->surname = $validatedData['surname'];
+        $a->address = $validatedData['address'];
+//        $a->enclosure_id = $validatedData['enclosure_id’];
+        $a->save();
+        session()->flash('message','Person was created');
+        return redirect()->route('people.index');
+            //return "Passed Validation";
+//        return $validatedData;
     }
 
     /**

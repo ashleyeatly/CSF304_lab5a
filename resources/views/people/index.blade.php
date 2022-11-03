@@ -4,6 +4,7 @@
 
 @section('content')
     <article>
+{{--    <p>Animals at Swansea Zoo</p>--}}
         <ul>
             @foreach($people as $person)
                 <li>
