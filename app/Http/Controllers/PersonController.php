@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Person;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PersonController extends Controller
 {
@@ -41,7 +42,7 @@ class PersonController extends Controller
 //        dd($request['name'])
 //        dd($request['first_name']);
         $validatedData = $request->validate([
-            'title' => 'required|max:25',
+            'title' =>  Rule::in(['Mr', 'Mrs', 'Miss','Ms','Dr','Dr.','Doctor']),
             'first_name' => 'required|string',
                 'surname' => 'required|string',
                 'address' => 'required|string',
