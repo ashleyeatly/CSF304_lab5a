@@ -42,7 +42,7 @@ class PersonController extends Controller
 //        dd($request['name'])
 //        dd($request['first_name']);
         $validatedData = $request->validate([
-            'title' =>  Rule::in(['Mr', 'Mrs', 'Miss','Ms','Dr','Dr.','Doctor']),
+            'title' =>  ['required',Rule::in(['Mr', 'Mrs', 'Miss','Ms','Dr','Dr.','Doctor'])],
             'first_name' => 'required|string',
                 'surname' => 'required|string',
                 'address' => 'required|string',
