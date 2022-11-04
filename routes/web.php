@@ -39,10 +39,10 @@ Route::get('/people/create', [PersonController::class, 'create'])
 Route::post('/people', [PersonController::class, 'store'])
     ->name('people.store');
 
-Route::get('/people/{id}',[PersonController::class,'show'])
+Route::get('/people/{person}',[PersonController::class,'show'])
     ->name('people.show');
 
-Route::delete('/people/{id}',[PersonController::class,'destroy'])
+Route::delete('/people/{person}',[PersonController::class,'destroy'])
     ->name('people.destroy');
 
 Auth::routes();

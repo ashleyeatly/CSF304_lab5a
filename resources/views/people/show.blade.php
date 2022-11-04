@@ -17,7 +17,7 @@
                 <li>Address: {{$person->address}}</li>
             </ul>
             <form method="POST"
-                  action="{{route('people.destroy',['id'=>$person->id])}}">
+                  action="{{route('people.destroy',['person'=>$person])}}">
                     @csrf
                     @method('DELETE')
                     <button type="submit">Delete</button>
@@ -26,19 +26,14 @@
             <form method="GET"
                   action="{{route('people.create')}}">
                 @csrf
-{{--                @method()--}}
                 <button type="submit">Create</button>
             </form>
 
             <form method="GET"
                   action="{{route('people.index')}}">
                 @csrf
-                {{--                @method()--}}
                 <button type="submit">Back</button>
             </form>
-{{--            <a href="{{route('people.index')}}">Back</a>--}}
-{{--            <a href="{{route('people.create')}}">Create Person</a>--}}
-            {{--        <a href="{{route('people.index')}}" class="btn btn-primary">Back</a>--}}
         </div>
     </div>
 @endsection

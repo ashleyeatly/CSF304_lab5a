@@ -8,7 +8,7 @@
         <ul>
             @foreach($people as $person)
                 <li>
-                    <a href="{{route('people.show',['id'=>$person->id])}}">{{$person->first_name}} {{$person->surname}} {{$person->address}}
+                    <a href="{{route('people.show',['person'=>$person])}}">{{$person->first_name}} {{$person->surname}} {{$person->address}}
                 </li>
             @endforeach
         </ul>
