@@ -42,6 +42,9 @@ Route::post('/people', [PersonController::class, 'store'])
 Route::get('/people/{id}',[PersonController::class,'show'])
     ->name('people.show');
 
+Route::delete('/people/{id}',[PersonController::class,'destroy'])
+    ->name('people.destroy');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

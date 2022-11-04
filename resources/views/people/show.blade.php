@@ -7,7 +7,8 @@
     <div class="panel panel-default">
         <!-- Content here -->
         <div class="panel-heading">Panel Heading</div>
-        <a href="{{route('people.create')}}">Create Person</a>
+ {{--        <a href="{{route('people.destroy',['id'=>$person->id])}}">Delete Person</a>--}}
+{{--        <a href="{{route('people.destroy',['id'=>$person->id])}}">Delete Person</a>--}}
         <div class="panel-body">
             <ul>
                 <li>Title: {{$person->title}}</li>
@@ -15,7 +16,28 @@
                 <li>Surname: {{$person->surname}}</li>
                 <li>Address: {{$person->address}}</li>
             </ul>
-            <a href="{{route('people.index')}}"><button type="button" class="btn btn-primary">Back</button></a>
+            <form method="POST"
+                  action="{{route('people.destroy',['id'=>$person->id])}}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">Delete</button>
+            </form>
+
+            <form method="GET"
+                  action="{{route('people.create')}}">
+                @csrf
+{{--                @method()--}}
+                <button type="submit">Create</button>
+            </form>
+
+            <form method="GET"
+                  action="{{route('people.index')}}">
+                @csrf
+                {{--                @method()--}}
+                <button type="submit">Back</button>
+            </form>
+{{--            <a href="{{route('people.index')}}">Back</a>--}}
+{{--            <a href="{{route('people.create')}}">Create Person</a>--}}
             {{--        <a href="{{route('people.index')}}" class="btn btn-primary">Back</a>--}}
         </div>
     </div>
