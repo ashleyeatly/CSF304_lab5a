@@ -1,21 +1,14 @@
-@extends('layouts.master')
-
-@section('title', 'People')
-
-@section('content')
-
-{{--    @include('partials.people_details')--}}
+<x-layout title="people_details">
     <h1>Admin View</h1>
     <form method="GET"
           action="{{route('people.index')}}">
         @csrf
         <button type="submit" class="btn btn-primary">Back</button>
     </form>
+
     <table id="person-table" class="table table-striped" style="width:100%">
         <thead>
         <tr>
-
-            <th></th>
             <th>id</th>
             <th>title</th>
             <th>First Name</th>
@@ -51,15 +44,5 @@
         } );
     </script>
     @endpush
-    <article>
-        <ul>
-            @foreach($people as $person)
-                <li>
-                    <a href="{{route('people.show',['person'=>$person])}}">{{$person->first_name}} {{$person->surname}} {{$person->address}}
-                </li>
-            @endforeach
-        </ul>
-    </article>
-
-@endsection
+</x-layout>
 

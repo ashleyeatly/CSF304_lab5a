@@ -6,9 +6,16 @@ use App\Models\Person;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Yajra\DataTables\Facades\DataTables;
 
 class PersonController extends Controller
 {
+
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +25,6 @@ class PersonController extends Controller
     {
         $people = Person::all();
         return view('people.index',['people'=>$people]);
-        //
     }
 
     /**
@@ -39,8 +45,6 @@ class PersonController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request['name'])
-//        dd($request['first_name']);
         $validatedData = $request->validate([
             'title' =>  ['required',Rule::in(['Mr', 'Mrs', 'Miss','Ms','Dr','Dr.','Doctor'])],
             'first_name' => 'required|string',
@@ -52,12 +56,9 @@ class PersonController extends Controller
         $a->first_name = $validatedData['first_name'];
         $a->surname = $validatedData['surname'];
         $a->address = $validatedData['address'];
-//        $a->enclosure_id = $validatedData['enclosure_id’];
         $a->save();
         session()->flash('message','Person was created');
         return redirect()->route('people.index');
-            //return "Passed Validation";
-//        return $validatedData;
     }
 
     /**
@@ -68,7 +69,6 @@ class PersonController extends Controller
      */
     public function show(Person $person)
     {
-//        $person = Person::FindOrFail($id);
         return view('people.show',['person'=>$person]);
     }
 
@@ -98,14 +98,30 @@ class PersonController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param Person $person
      * @return \Illuminate\Http\Response
      */
     public function destroy(Person $person)
     {
-//        $person = Person::FindOrFail($id);
         $person->delete();
         return redirect()->route('people.index')
             ->with('message','Person was deleted');
+    }
+
+
+    public function getPeople(Request $request)
+    {
+//        dd($request->ajax());
+        if ($request->ajax()) {
+            $data = Person::latest()->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 }

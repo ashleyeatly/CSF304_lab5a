@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PersonController;
 use App\Models\Person;
 use Illuminate\Support\Facades\Route;
@@ -15,19 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-//    $a = Person::all();
-//    dump($a);
-//    echo '</br>';
-//    echo 'just give users';
-//    // equivalent select * from users
-//    $b = Person::find(1)->toSql();
-//    echo $b;
-//    echo '</br>';
-//    $b = Person::all();
-//    echo $b;
-    // return "we are here";
-    return view('welcome');
+Route::get('/', [HomeController::class,'index'])
+    ->name('admin');
+
+Route::middleware(['auth'])->group(function(){
+    Route::view('/admin','admin')->name('admin');
 });
 
 Route::get('/people', [PersonController::class,'index'])
@@ -51,8 +44,6 @@ Route::delete('/people/{person}',[PersonController::class,'destroy'])
     ->middleware('auth');
 
 Auth::routes();
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
